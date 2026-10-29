@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install RootHide Theos and iOS SDK
-        uses: iossxx/theos-action@v1
+        uses: iossxx/theos-action@main
         with:
           theos-dir: theos
           theos-src: https://github.com/roothide/theos
