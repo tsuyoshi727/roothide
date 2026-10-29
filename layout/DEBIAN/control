@@ -1,0 +1,9 @@
+Package: local.tinge18standalone
+Name: Tinge18 Standalone (EXPERIMENTAL)
+Version: 0.1.0~test1
+Architecture: iphoneos-arm64e
+Description: Unverified adaptive badge-color proof of concept for iOS 18 RootHide. Does not include prebuilt Tinge 26 core.
+Maintainer: Local experimental port
+Section: Tweaks
+Depends: firmware (>= 18.0), firmware (<< 19.0), mobilesubstrate
+Conflicts: com.sahinkaa.tinge26, com.p2kdev.tinge

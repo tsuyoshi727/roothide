@@ -1,0 +1,41 @@
+name: Tinge18 RootHide auto build (EXPERIMENTAL)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Get sources
+        uses: actions/checkout@v4
+
+      - name: Install RootHide Theos and iOS SDK
+        uses: iossxx/theos-action@v1
+        with:
+          theos-dir: theos
+          theos-src: https://github.com/roothide/theos
+          theos-sdks: https://github.com/theos/sdks
+          theos-sdks-branch: master
+          orion: 'false'
+
+      - name: Compile and package iOS 18 RootHide tweak
+        env:
+          THEOS: ${{ github.workspace }}/theos
+        run: |
+          set -euxo pipefail
+          make clean package THEOS_PACKAGE_SCHEME=roothide FINALPACKAGE=1
+          find packages -name '*.deb' -maxdepth 1 -print
+          test -n "$(find packages -maxdepth 1 -name '*.deb' -print -quit)"
+
+      - name: Upload deb if build succeeds
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tinge18-RootHide-experimental-deb
+          path: packages/*.deb
+          if-no-files-found: error
